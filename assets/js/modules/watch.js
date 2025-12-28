@@ -12,9 +12,12 @@ export default {
                 }
 
                 if (this.inModal && !this.isBulkSelecting()) {
-                    this.selectedFileIs('folder')
-                        ? EventHub.fire('folder_selected', val.storage_path)
-                        : EventHub.fire('file_selected', val.path)
+                    if (this.selectedFileIs('folder')) {
+                        EventHub.fire('folder_selected', val.storage_path)
+                    } else {
+                        EventHub.fire('file_selected', val.path);
+                        EventHub.fire('file_selected_id', val);
+                    }
 
                     this.selectedFileIs('folder')
                         ? EventHub.fire('folder_selected_datas', val)
